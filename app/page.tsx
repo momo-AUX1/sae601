@@ -29,41 +29,43 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
       <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="absolute inset-0 w-full h-full z-0 opacity-40">
+          <video 
+        className="w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+          >
+        <source src="/bg-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-34 relative z-10">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-green-700 mb-6">OUTREPIE</h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-4">La ville écologique du futur</p>
-            <p className="text-lg text-gray-500 mb-12 max-w-3xl mx-auto">
-              Découvrez une vie urbaine durable où la technologie rencontre la nature. Planifiez, explorez et contribuez à construire la ville intelligente la plus verte de la planète.
-            </p>
+        <h1 className="text-5xl md:text-7xl font-bold text-green-600 mb-6">OUTREPIE</h1>
+        <p className="text-xl md:text-2xl text-gray-800 mb-4">La ville écologique du futur</p>
+        <p className="text-lg text-gray-700 mb-12 max-w-3xl mx-auto">
+          Découvrez une vie urbaine durable où la technologie rencontre la nature. Planifiez, explorez et contribuez à construire la ville intelligente la plus verte de la planète.
+        </p> 
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={scrollToMap}
-                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2"
-              >
-                <MapPin className="h-5 w-5" />
-                Explorer la ville
-              </button>
-              <a
-                href="/main"
-                className="px-8 py-4 bg-white hover:bg-gray-50 text-green-700 font-semibold rounded-lg shadow-lg border-2 border-green-200 transition-all duration-200 flex items-center gap-2"
-              >
-                Commencer
-                <ArrowRight className="h-5 w-5" />
-              </a>
-            </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button
+            onClick={scrollToMap}
+            className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2"
+          >
+            <MapPin className="h-5 w-5" />
+            Explorer la ville
+          </button>
+          <a
+            href="/main"
+            className="px-8 py-4 bg-white hover:bg-gray-50 text-green-700 font-semibold rounded-lg shadow-lg border-2 border-green-200 transition-all duration-200 flex items-center gap-2"
+          >
+            Commencer
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </div>
           </div>
-        </div>
-
-        <div className="absolute top-20 left-10 opacity-20">
-          <Leaf className="h-16 w-16 text-green-400 animate-pulse" />
-        </div>
-        <div className="absolute top-40 right-20 opacity-20">
-          <Zap className="h-12 w-12 text-blue-400 animate-pulse" />
-        </div>
-        <div className="absolute bottom-20 left-20 opacity-20">
-          <Users className="h-14 w-14 text-green-500 animate-pulse" />
         </div>
       </section>
 

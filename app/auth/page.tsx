@@ -143,7 +143,7 @@ export default function AuthForm() {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
             <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="p-6 text-center">
-                    <h2 className="text-2xl font-bold text-green-700">Greenda</h2>
+                    <h2 className="text-2xl font-bold text-green-700">OUTREPIE</h2>
                     <p className="text-gray-600 mt-1">Bienvenue sur votre plateforme de signalement environnemental</p>
                 </div>
 
@@ -344,7 +344,7 @@ export default function AuthForm() {
                     )}
 
                     <div className="mt-6 text-center text-sm text-gray-600">
-                        <p>En utilisant Greenda, vous acceptez d'aider à protéger notre environnement</p>
+                        <p>En utilisant OUTREPIE, vous acceptez d'aider à protéger notre environnement</p>
                     </div>
                 </div>
             </div>

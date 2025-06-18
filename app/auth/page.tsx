@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ChangeEvent } from "react"
 import { Eye, EyeOff, Loader2, User, Mail, Lock, MapPin } from "lucide-react"
+import { useParams, useRouter } from "next/navigation"
 
 interface LoginData {
     email: string
@@ -28,6 +29,7 @@ export default function AuthForm() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
+    const router = useRouter();
 
     const [loginData, setLoginData] = useState<LoginData>({
         email: "",
@@ -73,6 +75,7 @@ export default function AuthForm() {
 
                 setSuccess("Connexion réussie ! Bienvenue.")
                 setLoginData({ email: "", mdp: "" })
+                router.push("/main")
                 console.log("Login successful:", data)
             } else {
                 setError(data.message || "Échec de la connexion")

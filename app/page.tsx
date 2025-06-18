@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { MapPin, Zap, Leaf, Users, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Footer from "../components/footer"
+import Navbar from "../components/navbar"
 
 const InteractiveMap = dynamic(() => import("../components/interactive-map"), {
   ssr: false,
@@ -28,6 +29,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+      <Navbar />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0 opacity-40">
           <video 

@@ -5,6 +5,8 @@ import { MapPin, Zap, Leaf, Users, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Footer from "../components/footer"
 import Navbar from "../components/navbar"
+import "@fontsource/syne";
+
 
 const InteractiveMap = dynamic(() => import("../components/interactive-map"), {
   ssr: false,
@@ -28,48 +30,48 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      <Navbar />
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 w-full h-full z-0 opacity-40">
-          <video 
-        className="w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-          >
-        <source src="/bg-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-34 relative z-10">
-          <div className="text-center">
-        <h1 className="text-5xl md:text-7xl font-bold text-green-600 mb-6">OUTREPIE</h1>
-        <p className="text-xl md:text-2xl text-gray-800 mb-4">La ville écologique du futur</p>
-        <p className="text-lg text-gray-700 mb-12 max-w-3xl mx-auto">
-          Découvrez une vie urbaine durable où la technologie rencontre la nature. Planifiez, explorez et contribuez à construire la ville intelligente la plus verte de la planète.
-        </p> 
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button
-            onClick={scrollToMap}
-            className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2"
-          >
-            <MapPin className="h-5 w-5" />
-            Explorer la ville
-          </button>
-          <a
-            href="/main"
-            className="px-8 py-4 bg-white hover:bg-gray-50 text-green-700 font-semibold rounded-lg shadow-lg border-2 border-green-200 transition-all duration-200 flex items-center gap-2"
-          >
-            Commencer
-            <ArrowRight className="h-5 w-5" />
-          </a>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-[#C0DDE6] to-[#EFF7FA] relative overflow-hidden font-syne">
+        {/* Navigation */}
+        <header className="flex justify-between items-center px-8 py-6 z-20 relative">
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Outrepie Logo" className="h-40" />
           </div>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-gray-800">
+            <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600">Accueil</a>
+            <a href="#">Engagements</a>
+            <a href="#">Signalement</a>
+            <a href="#">À Propos</a>
+            <a href="#" className="bg-blue-900 text-white px-4 py-2 rounded-md ml-4">Connexion</a>
+          </nav>
+        </header>
+
+        {/* Illustration + Slogan */}
+        <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center justify-between pt-10 md:pt-20">
+          <div className="md:w-1/2 text-left mb-10 md:mb-0">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+              Le futur des <br /> transports en ville
+            </h1>
+          </div>
+
+          <div className="md:w-1/2 relative">
+            {/* Illustration SVG ou PNG ou video transparente */}
+            <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-auto max-h-[500px] object-contain"
+            >
+              <source src="/bg-video.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </main>
+
+        {/* Decorative Lines (optional SVG background) */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+          {/* You can add SVG or CSS gradients here for decor */}
         </div>
-      </section>
 
       <section className="py-20 bg-white/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

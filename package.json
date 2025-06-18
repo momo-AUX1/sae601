@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/syne": "^5.2.6",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.516.0",
     "next": "15.3.3",

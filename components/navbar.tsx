@@ -1,19 +1,29 @@
 "use client"
 
-import { useState } from "react"
-import { Leaf, Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  useEffect(() => {
+    setIsLoggedIn(typeof window !== "undefined" && !!localStorage.getItem("access_token"))
+  }, [])
 
-  const closeMenu = () => {
-    setIsMenuOpen(false)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const closeMenu = () => setIsMenuOpen(false)
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token")
+    setIsLoggedIn(false)
+    closeMenu()
+    router.push("/")
   }
 
   const scrollToPropos = () => {
@@ -23,13 +33,19 @@ export default function Navbar() {
     window.location.reload()
   }
 
-  const navLinks = [
-    { name: "Accueil", href: "/", isButton: false },
-    { name: "À propos", href: "#", isButton: false },
-    { name: "Signalement", href: "/main", isButton: false },
-    { name: "Contact", href: "#", isButton: false },
-    { name: "Connexion", href: "/auth", isButton: true },
-  ]
+  const navLinks = isLoggedIn
+    ? [
+        { name: "Accueil", href: "/", isButton: false },
+        { name: "À propos", href: "#", isButton: false },
+        { name: "Compte", href: "/main", isButton: false },
+        { name: "Déconnexion", href: "#", isButton: true, onClick: handleLogout },
+      ]
+    : [
+        { name: "Accueil", href: "/", isButton: false },
+        { name: "À propos", href: "#", isButton: false },
+        { name: "Compte", href: "/main", isButton: false },
+        { name: "Connexion", href: "/auth", isButton: true },
+      ]
 
   return (
     <nav className="bg-white/95 backdrop-blur-sm border-b border-green-100 sticky top-0 z-50 shadow-sm">
@@ -49,20 +65,40 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={link.name === "À propos" ? scrollToPropos : closeMenu}
-                className={
-                  link.isButton
-                    ? "px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
-                    : "text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full"
-                }
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.name === "À propos" ? (
+                <button
+                  key={link.name}
+                  onClick={scrollToPropos}
+                  className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full bg-transparent border-none outline-none"
+                  type="button"
+                >
+                  {link.name}
+                </button>
+              ) : link.name === "Déconnexion" ? (
+                <button
+                  key={link.name}
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                  type="button"
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={closeMenu}
+                  className={
+                    link.isButton
+                      ? "px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                      : "text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full"
+                  }
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile button */}
@@ -84,20 +120,40 @@ export default function Navbar() {
           }`}
         >
           <div className="py-4 space-y-3 border-t border-green-100">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={link.name == "À propos" ? scrollToPropos : closeMenu}
-                className={
-                  link.isButton
-                    ? "block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
-                    : "block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-md font-medium transition-all duration-200"
-                }
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.name === "À propos" ? (
+                <button
+                  key={link.name}
+                  onClick={scrollToPropos}
+                  className="block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-md font-medium transition-all duration-200 w-full text-left bg-transparent border-none outline-none"
+                  type="button"
+                >
+                  {link.name}
+                </button>
+              ) : link.name === "Déconnexion" ? (
+                <button
+                  key={link.name}
+                  onClick={handleLogout}
+                  className="block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
+                  type="button"
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={closeMenu}
+                  className={
+                    link.isButton
+                      ? "block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
+                      : "block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-md font-medium transition-all duration-200"
+                  }
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
           </div>
         </div>
       </div>

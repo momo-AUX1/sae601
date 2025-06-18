@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Leaf, Menu, X } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -15,12 +16,19 @@ export default function Navbar() {
     setIsMenuOpen(false)
   }
 
+  const scrollToPropos = () => {
+    const mapSection = document.getElementById("propos")
+    mapSection?.scrollIntoView({ behavior: "smooth" })
+    closeMenu()
+    window.location.reload()
+  }
+
   const navLinks = [
     { name: "Accueil", href: "/", isButton: false },
-    { name: "Signalement", href: "/auth", isButton: false },
     { name: "À propos", href: "#", isButton: false },
+    { name: "Signalement", href: "/main", isButton: false },
     { name: "Contact", href: "#", isButton: false },
-    { name: "Connexion", href: "/main", isButton: true },
+    { name: "Connexion", href: "/auth", isButton: true },
   ]
 
   return (
@@ -29,8 +37,14 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo*/}
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Leaf className="h-8 w-8 text-green-600" />
-            <span className="text-xl font-bold text-green-700">OutrePie</span>
+            <Image 
+              src="/logo.svg" 
+              alt="OutrePie Logo" 
+              width={128} 
+              height={128}
+              className="text-green-600"
+            />
+            <span className="text-xl font-bold text-green-700"> </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -39,6 +53,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={link.name === "À propos" ? scrollToPropos : closeMenu}
                 className={
                   link.isButton
                     ? "px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
@@ -73,7 +88,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={closeMenu}
+                onClick={link.name == "À propos" ? scrollToPropos : closeMenu}
                 className={
                   link.isButton
                     ? "block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"

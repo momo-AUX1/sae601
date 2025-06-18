@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent, type ChangeEvent } from "react"
 import { Eye, EyeOff, Loader2, User, Mail, Lock, MapPin } from "lucide-react"
+import { useRouter } from "next/navigation";
+
 
 interface LoginData {
     email: string
@@ -28,6 +30,8 @@ export default function AuthForm() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
+    const router = useRouter();
+
 
     const [loginData, setLoginData] = useState<LoginData>({
         email: "",
@@ -44,10 +48,10 @@ export default function AuthForm() {
     const API_BASE_URL = "https://test.nanodata.cloud"
 
     const handleLogin = async (e: FormEvent) => {
-        e.preventDefault()
-        setIsLoading(true)
-        setError("")
-        setSuccess("")
+        e.preventDefault();
+        setIsLoading(true);
+        setError("");
+        setSuccess("");
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/login`, {
@@ -56,34 +60,36 @@ export default function AuthForm() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(loginData),
-            })
+            });
 
-            const data: AuthResponse = await response.json()
+            const data: AuthResponse = await response.json();
 
             if (response.ok) {
                 if (data.access_token) {
-                    localStorage.setItem("access_token", data.access_token)
+                    localStorage.setItem("access_token", data.access_token);
                 }
                 if (data.refresh_token) {
-                    localStorage.setItem("refresh_token", data.refresh_token)
+                    localStorage.setItem("refresh_token", data.refresh_token);
                 }
                 if (data.user_id) {
-                    localStorage.setItem("user_id", data.user_id.toString())
+                    localStorage.setItem("user_id", data.user_id.toString());
                 }
 
-                setSuccess("Connexion réussie ! Bienvenue.")
-                setLoginData({ email: "", mdp: "" })
-                console.log("Login successful:", data)
+                setSuccess("Connexion réussie ! Bienvenue.");
+                setLoginData({ email: "", mdp: "" });
+                // Redirection vers la page d'infos du compte
+                router.push("/userAccount");
+                return;
             } else {
-                setError(data.message || "Échec de la connexion")
+                setError(data.message || "Échec de la connexion");
             }
         } catch (err) {
-            setError("Erreur réseau. Veuillez vérifier votre connexion et réessayer.")
-            console.error("Login error:", err)
+            setError("Erreur réseau. Veuillez vérifier votre connexion et réessayer.");
+            console.error("Login error:", err);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     const handleRegister = async (e: FormEvent) => {
         e.preventDefault()

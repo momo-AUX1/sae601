@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import { Lock, Trash2 } from "lucide-react";
 

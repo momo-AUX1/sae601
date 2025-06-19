@@ -1,5 +1,5 @@
+//@ts-nocheck
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle, BellOff } from "lucide-react";

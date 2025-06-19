@@ -24,7 +24,16 @@ interface DonneeItineraire {
     positions: [number, number][]
     couleur: string
 }
+const bikeIcon = new L.Icon({
+    iconUrl: '/pictos/bikes.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+});
 
+<Marker position={[48.8566, 2.3522]} icon={bikeIcon}>
+    <Popup>Vélos disponibles ici</Popup>
+</Marker>
 function EvenementsCarte({
     onAjouterMarqueur,
     onAjouterItineraire,

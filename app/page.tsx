@@ -32,21 +32,12 @@ export default function LandingPage() {
   return (
       <div className="min-h-screen bg-gradient-to-br from-[#C0DDE6] to-[#EFF7FA] relative overflow-hidden font-syne">
         {/* Navigation */}
-        <header className="flex justify-between items-center px-8 py-6 z-20 relative">
-          <div className="flex items-center gap-2">
-            <img src="/logo.svg" alt="Outrepie Logo" className="h-40" />
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-gray-800">
-            <a href="#" className="text-blue-600 font-semibold border-b-2 border-blue-600">Accueil</a>
-            <a href="#">Engagements</a>
-            <a href="#">Signalement</a>
-            <a href="#">À Propos</a>
-            <a href="#" className="bg-blue-900 text-white px-4 py-2 rounded-md ml-4">Connexion</a>
-          </nav>
-        </header>
+        <Navbar />
+
+        {/* Background Decorative Elements */}
 
         {/* Illustration + Slogan */}
-        <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center justify-between pt-10 md:pt-20">
+        <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center justify-between pt-10 md:pt-10">
           <div className="md:w-1/2 text-left mb-10 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
               Le futur des <br /> transports en ville
@@ -60,7 +51,7 @@ export default function LandingPage() {
                 muted
                 loop
                 playsInline
-                className="w-full h-auto max-h-[500px] object-contain"
+                className="w-full h-auto max-h-[1000px] "
             >
               <source src="/bg-video.webm" type="video/webm" />
               Your browser does not support the video tag.
@@ -143,22 +134,11 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Prêt à rejoindre le futur ?</h2>
           <p className="text-xl text-green-100 mb-8">
-            Faites partie de la première véritable ville intelligente et durable. Inscrivez-vous dès aujourd'hui et aidez-nous à construire OUTREPIE ensemble.
+            Faites partie de la première véritable ville intelligente et durable.
+            <br/>
+            Venez visiter OUTREPIE.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/auth"
-              className="px-8 py-4 bg-white hover:bg-gray-100 text-green-700 font-semibold rounded-lg shadow-lg transition-all duration-200"
-            >
-              Inscrivez-vous
-            </a>
-            <a
-              href="/main"
-              className="px-8 py-4 bg-transparent hover:bg-white/10 text-white font-semibold rounded-lg border-2 border-white transition-all duration-200"
-            >
-              En savoir plus
-            </a>
-          </div>
+
         </div>
       </section>
 

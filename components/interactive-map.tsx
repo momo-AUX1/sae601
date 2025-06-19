@@ -24,6 +24,13 @@ interface DonneeItineraire {
     positions: [number, number][]
     couleur: string
 }
+const bikeIcon = new L.Icon({
+    iconUrl: '/pictos/bikes.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+});
+
 
 function EvenementsCarte({
     onAjouterMarqueur,
@@ -108,7 +115,9 @@ export default function CarteInteractive() {
     }
 
     return (
+
         <div className="relative">
+
             <div className="absolute top-4 right-4 z-[1000] bg-white rounded-lg shadow-lg p-3 space-y-2">
                 <div className="text-sm font-medium text-gray-700 mb-2">Contrôles de la carte</div>
                 <div className="text-xs text-gray-500 space-y-1">

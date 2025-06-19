@@ -2,9 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { MapPin, Zap, Leaf, Users, ArrowRight } from "lucide-react"
+import Image from "next/image";
+
 import dynamic from "next/dynamic"
 import Footer from "../components/footer"
 import Navbar from "../components/navbar"
+import Timeline from "@/components/timeline"
+import {Marker, Popup} from "react-leaflet";
+
 
 
 const InteractiveMap = dynamic(() => import("../components/interactive-map"), {
@@ -81,8 +86,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">100% Renouvelable</h3>
               <p className="text-gray-600">
-                Alimentée entièrement par des sources d'énergie propre, dont le solaire, l'éolien et des technologies vertes innovantes pour un avenir neutre en carbone.
-              </p>
+                Soucieuse de l’environnement et de ses habitants, Outrepie s’engage vers une transition écologique au long terme. Transports doux, énergies renouvelables... des projets sont en cours pour améliorer au long terme la qualité de vie des citoyens.              </p>
             </div>
 
             <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -91,47 +95,84 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Infrastructure intelligente</h3>
               <p className="text-gray-600">
-                Des systèmes de gestion urbaine pilotés par l'IA optimisent la circulation, la consommation d'énergie et la distribution des ressources pour une efficacité maximale.
-              </p>
+                Des systèmes de gestion connectés pour fluidifier la circulation, réduire le temps de trajet et accompagner les cyclistes du début à la fin de leur parcours.              </p>
             </div>
 
             <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
                 <Users className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">La communauté avant tout</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">Confort de vie & engagement citoyen</h3>
               <p className="text-gray-600">
-                Conçue pour les habitants, avec de nombreux espaces verts, des jardins partagés et des lieux de vie collaboratifs.
+                Conçue pour les habitants, avec de
+                nombreux espaces verts, des lieux de vie collaboratifs et des solutions accessibles à tous. Outrepie invite ses citoyens à être acteurs du changement et à  faire entendre leur voix.              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+        <section id="map-section" className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Planifiez votre OUTREPIE</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                Utilisez notre carte interactive pour explorer la ville, signaler des problèmes, repérer les vélos disponibles et visualiser les zones à forte affluence.
               </p>
+
+              {/* Légende */}
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span>Ajout de points</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span>Itinéraires proposés</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Image src="/pictos/bikes.png" alt="Vélo dispo" width={16} height={16} />
+                  <span>Vélos disponibles</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Image src="/pictos/warning.png" alt="Problème signalé" width={16} height={16} />
+                  <span>Problème signalé</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-green-400 rounded-sm"></div>
+                  <span>Circulation fluide</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-yellow-400 rounded-sm"></div>
+                  <span>Circulation modérée</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-red-500 rounded-sm"></div>
+                  <span>Forte affluence</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Carte */}
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden relative ">
+              {isMapReady && <InteractiveMap />}
+
+            </div>
+            <br/>
+            <div className="flex justify-end mb-4">
+              <a
+                  href="/main/"
+                  className="inline-block bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
+              >
+                Signalement d'incidents
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="map-section" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Planifiez votre OUTREPIE</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-              Utilisez notre carte interactive pour explorer la ville, ajouter des points d'intérêt et mettre en avant les itinéraires importants. Cliquez n'importe où pour ajouter des marqueurs et planifier votre ville durable idéale.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span>Cliquez pour ajouter des points</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span>Tracez pour mettre en avant les itinéraires</span>
-              </div>
-            </div>
-          </div>
+        <Timeline />
 
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden">{isMapReady && <InteractiveMap />}</div>
-        </div>
-      </section>
 
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600">
+        <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Prêt à rejoindre le futur ?</h2>
           <p className="text-xl text-green-100 mb-8">

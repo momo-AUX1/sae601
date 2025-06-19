@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle, BellOff } from "lucide-react";
 import CreateIncidentModal from "../components/create-incident-modal"
 import EditProfileModal from "@/components/edit-profile-modal";
+import SecurityModal from "@/components/edit-password-modal";
 
 interface UserInfo {
     id: number;
@@ -35,6 +36,15 @@ const UserAccountPage: React.FC = () => {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false);
     const [newsletterStatus, setNewsletterStatus] = useState(false);
+    const [showSecurityModal, setShowSecurityModal] = useState(false);
+
+
+    const handleAccountDeleted = () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('user_id');
+        router.push('/auth');
+    };
 
     const toggleNewsletter = async () => {
         const token = localStorage.getItem('access_token');
@@ -111,11 +121,11 @@ const UserAccountPage: React.FC = () => {
                 const data = await res.json();
                 const transformedData = data.map((s: any) => ({
                     id: s.id,
-                    titre: s.categorie, 
+                    titre: s.categorie,
                     description: s.message,
-                    statut: s.status ? 'resolu' : 'en_cours', 
-                    date_creation: new Date(s.date).toISOString(), 
-                    categorie: s.categorie 
+                    statut: s.status ? 'resolu' : 'en_cours',
+                    date_creation: new Date(s.date).toISOString(),
+                    categorie: s.categorie
                 }));
                 setSignalements(transformedData);
             }
@@ -313,7 +323,10 @@ const UserAccountPage: React.FC = () => {
                                     </div>
                                 </button>
 
-                                <button className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors">
+                                <button
+                                    className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors"
+                                    onClick={() => setShowSecurityModal(true)}
+                                >
                                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                                         <Shield size={18} className="text-blue-600" />
                                     </div>
@@ -378,6 +391,11 @@ const UserAccountPage: React.FC = () => {
                 onClose={() => setShowEditModal(false)}
                 user={user}
                 onSave={(updatedUser) => setUser(updatedUser)}
+            />
+            <SecurityModal
+                isOpen={showSecurityModal}
+                onClose={() => setShowSecurityModal(false)}
+                onAccountDelete={handleAccountDeleted}
             />
         </div>
     );

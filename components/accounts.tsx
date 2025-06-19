@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle } from "lucide-react";
-import Navbar from './navbar';
+import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle, BellOff } from "lucide-react";
+import CreateIncidentModal from "../components/create-incident-modal"
 
 interface UserInfo {
     id: number;
     email: string;
     nom: string;
     adresse: string;
+    news_letter: boolean;
 }
 
 interface Signalement {
@@ -19,6 +20,7 @@ interface Signalement {
     statut: string;
     date_creation: string;
     date_modification?: string;
+    categorie: string;
 }
 
 const API_BASE_URL = "https://test.nanodata.cloud";
@@ -29,6 +31,37 @@ const UserAccountPage: React.FC = () => {
     const [signalements, setSignalements] = useState<Signalement[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadingSignalements, setLoadingSignalements] = useState(false);
+    const [showCreateModal, setShowCreateModal] = useState(false)
+    const [newsletterStatus, setNewsletterStatus] = useState(false);
+
+    const toggleNewsletter = async () => {
+        const token = localStorage.getItem('access_token');
+        if (!token) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    news_letter: !newsletterStatus
+                })
+            });
+
+            if (response.ok) {
+                setNewsletterStatus(!newsletterStatus);
+                alert(`Newsletter ${!newsletterStatus ? 'activée' : 'désactivée'} avec succès!`);
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Échec de la mise à jour');
+            }
+        } catch (error) {
+            console.error('Error updating newsletter:', error);
+            alert('Erreur lors de la mise à jour de la newsletter');
+        }
+    };
 
     useEffect(() => {
         const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
@@ -50,7 +83,7 @@ const UserAccountPage: React.FC = () => {
                 } else if (res.ok) {
                     const data = await res.json();
                     setUser(data);
-                    // Charger les signalements après avoir récupéré l'utilisateur
+                    setNewsletterStatus(data.news_letter);
                     loadSignalements(token);
                 } else {
                     router.push('/auth');
@@ -74,16 +107,26 @@ const UserAccountPage: React.FC = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                setSignalements(data);
+                const transformedData = data.map((s: any) => ({
+                    id: s.id,
+                    titre: s.categorie, 
+                    description: s.message,
+                    statut: s.status ? 'resolu' : 'en_cours', 
+                    date_creation: new Date(s.date).toISOString(), 
+                    categorie: s.categorie 
+                }));
+                setSignalements(transformedData);
             }
         } catch (error) {
-            console.error('Erreur lors du chargement des signalements:', error);
+            console.error('Error loading signalements:', error);
         } finally {
             setLoadingSignalements(false);
         }
     };
 
-    const getStatusIcon = (statut: string) => {
+    const getStatusIcon = (statut?: string) => { // Accepte string | undefined
+        if (!statut) return <AlertCircle size={16} className="text-gray-600" />;
+
         switch (statut.toLowerCase()) {
             case 'en_cours':
                 return <Clock size={16} className="text-yellow-600" />;
@@ -96,7 +139,9 @@ const UserAccountPage: React.FC = () => {
         }
     };
 
-    const getStatusColor = (statut: string) => {
+    const getStatusColor = (statut?: string) => { // Accepte string | undefined
+        if (!statut) return 'bg-gray-100 text-gray-800';
+
         switch (statut.toLowerCase()) {
             case 'en_cours':
                 return 'bg-yellow-100 text-yellow-800';
@@ -141,11 +186,7 @@ const UserAccountPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
-            {/* Header */}
-
-            {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Welcome Section */}
                 <div className="mb-8">
                     <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
                         Bonjour, {user.nom} 👋
@@ -156,7 +197,6 @@ const UserAccountPage: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Profile Card */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                             <div className="bg-gradient-to-r from-green-500 to-blue-500 px-6 py-8">
@@ -198,7 +238,6 @@ const UserAccountPage: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Historique des signalements */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mt-8">
                             <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
                                 <h4 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
@@ -223,7 +262,7 @@ const UserAccountPage: React.FC = () => {
                                 ) : (
                                     <div className="space-y-4">
                                         {signalements.map((signalement) => (
-                                            <div key={signalement.id} className="border border-gray-200 rounded-xl p-4 hover:bg-gray-50 transition-colors">
+                                            <div key={signalement.id} className="border border-gray-200 rounded-xl p-4 hover:bg-gray-50 transition-colors" onClick={() => router.push(`/incident/${signalement.id}`)}>
                                                 <div className="flex items-start justify-between">
                                                     <div className="flex-1">
                                                         <div className="flex items-center gap-3 mb-2">
@@ -231,6 +270,11 @@ const UserAccountPage: React.FC = () => {
                                                             <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(signalement.statut)}`}>
                                                                 {getStatusIcon(signalement.statut)}
                                                                 {signalement.statut.replace('_', ' ').toUpperCase()}
+                                                            </span>
+                                                        </div>
+                                                        <div className="mb-2">
+                                                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-md">
+                                                                {signalement.categorie}
                                                             </span>
                                                         </div>
                                                         <p className="text-gray-600 text-sm mb-3 line-clamp-2">{signalement.description}</p>
@@ -253,9 +297,7 @@ const UserAccountPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Sidebar */}
                     <div className="space-y-6">
-                        {/* Quick Actions */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
                             <h4 className="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h4>
                             <div className="space-y-3">
@@ -279,13 +321,22 @@ const UserAccountPage: React.FC = () => {
                                     </div>
                                 </button>
 
-                                <button className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors">
-                                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                        <Bell size={18} className="text-purple-600" />
+                                <button
+                                    className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors"
+                                    onClick={toggleNewsletter}
+                                >
+                                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        {newsletterStatus ? (
+                                            <BellOff size={18} className="text-purple-600" />
+                                        ) : (
+                                            <Bell size={18} className="text-purple-600" />
+                                        )}
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900">Notifications</p>
-                                        <p className="text-sm text-gray-500">Préférences</p>
+                                        <p className="font-medium text-gray-900">Newsletter</p>
+                                        <p className="text-sm text-gray-500">
+                                            {newsletterStatus ? 'Désactiver' : 'Activer'}
+                                        </p>
                                     </div>
                                 </button>
 
@@ -294,14 +345,13 @@ const UserAccountPage: React.FC = () => {
                                         <AlertTriangle size={18} className="text-red-600" />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900 group-hover:text-red-700">Signaler un incident</p>
+                                        <p className="font-medium text-gray-900 group-hover:text-red-700" onClick={() => setShowCreateModal(true)}>Signaler un incident</p>
                                         <p className="text-sm text-gray-500">Support technique</p>
                                     </div>
                                 </button>
                             </div>
                         </div>
 
-                        {/* Stats Card */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
                             <h4 className="text-lg font-semibold text-gray-900 mb-4">Statistiques</h4>
                             <div className="space-y-4">
@@ -320,6 +370,7 @@ const UserAccountPage: React.FC = () => {
                     </div>
                 </div>
             </main>
+            <CreateIncidentModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} />
         </div>
     );
 };

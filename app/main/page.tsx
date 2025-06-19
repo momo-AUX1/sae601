@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Plus } from "lucide-react"
 import AppNavbar from "../../components/navbar"
 import Account from "../../components/accounts"
-import Incidents from "../../components/incidents"
+import Incidents from "../incidents/page"
 import Settings from "../../components/settings"
 import CreateIncidentModal from "../../components/create-incident-modal"
 
@@ -56,15 +56,6 @@ export default function MainDashboard() {
       <AppNavbar/>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{renderActiveTab()}</main>
-
-      {/* Floating Action Button */}
-      <button
-        onClick={() => setShowCreateModal(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-50"
-        aria-label="Create new incident"
-      >
-        <Plus className="h-6 w-6" />
-      </button>
 
       {/* Create Incident Modal */}
       <CreateIncidentModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} />

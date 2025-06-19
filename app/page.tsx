@@ -5,6 +5,8 @@ import { MapPin, Zap, Leaf, Users, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Footer from "../components/footer"
 import Navbar from "../components/navbar"
+import Timeline from "@/components/timeline"
+
 
 
 const InteractiveMap = dynamic(() => import("../components/interactive-map"), {
@@ -130,8 +132,10 @@ export default function LandingPage() {
           <div className="bg-white rounded-xl shadow-xl overflow-hidden">{isMapReady && <InteractiveMap />}</div>
         </div>
       </section>
+      <Timeline />
 
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600">
+
+        <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Prêt à rejoindre le futur ?</h2>
           <p className="text-xl text-green-100 mb-8">

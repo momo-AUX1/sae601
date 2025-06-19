@@ -8,6 +8,7 @@ import dynamic from "next/dynamic"
 import Footer from "../components/footer"
 import Navbar from "../components/navbar"
 import Timeline from "@/components/timeline"
+import {Marker, Popup} from "react-leaflet";
 
 
 
@@ -85,8 +86,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">100% Renouvelable</h3>
               <p className="text-gray-600">
-                Alimentée entièrement par des sources d'énergie propre, dont le solaire, l'éolien et des technologies vertes innovantes pour un avenir neutre en carbone.
-              </p>
+                Soucieuse de l’environnement et de ses habitants, Outrepie s’engage vers une transition écologique au long terme. Transports doux, énergies renouvelables... des projets sont en cours pour améliorer au long terme la qualité de vie des citoyens.              </p>
             </div>
 
             <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -95,18 +95,17 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Infrastructure intelligente</h3>
               <p className="text-gray-600">
-                Des systèmes de gestion urbaine pilotés par l'IA optimisent la circulation, la consommation d'énergie et la distribution des ressources pour une efficacité maximale.
-              </p>
+                Des systèmes de gestion connectés pour fluidifier la circulation, réduire le temps de trajet et accompagner les cyclistes du début à la fin de leur parcours.              </p>
             </div>
 
             <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
                 <Users className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">La communauté avant tout</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">Confort de vie & engagement citoyen</h3>
               <p className="text-gray-600">
-                Conçue pour les habitants, avec de nombreux espaces verts, des jardins partagés et des lieux de vie collaboratifs.
-              </p>
+                Conçue pour les habitants, avec de
+                nombreux espaces verts, des lieux de vie collaboratifs et des solutions accessibles à tous. Outrepie invite ses citoyens à être acteurs du changement et à  faire entendre leur voix.              </p>
             </div>
           </div>
         </div>
@@ -157,6 +156,15 @@ export default function LandingPage() {
             <div className="bg-white rounded-xl shadow-xl overflow-hidden relative ">
               {isMapReady && <InteractiveMap />}
 
+            </div>
+            <br/>
+            <div className="flex justify-end mb-4">
+              <a
+                  href="/main/"
+                  className="inline-block bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
+              >
+                Signalement d'incidents
+              </a>
             </div>
           </div>
         </section>

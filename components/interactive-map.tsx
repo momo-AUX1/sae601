@@ -31,9 +31,7 @@ const bikeIcon = new L.Icon({
     popupAnchor: [0, -32],
 });
 
-<Marker position={[48.8566, 2.3522]} icon={bikeIcon}>
-    <Popup>Vélos disponibles ici</Popup>
-</Marker>
+
 function EvenementsCarte({
     onAjouterMarqueur,
     onAjouterItineraire,
@@ -117,7 +115,9 @@ export default function CarteInteractive() {
     }
 
     return (
+
         <div className="relative">
+
             <div className="absolute top-4 right-4 z-[1000] bg-white rounded-lg shadow-lg p-3 space-y-2">
                 <div className="text-sm font-medium text-gray-700 mb-2">Contrôles de la carte</div>
                 <div className="text-xs text-gray-500 space-y-1">

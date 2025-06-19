@@ -5,7 +5,6 @@ import { MapPin, Zap, Leaf, Users, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Footer from "../components/footer"
 import Navbar from "../components/navbar"
-import "@fontsource/syne";
 
 
 const InteractiveMap = dynamic(() => import("../components/interactive-map"), {
@@ -39,7 +38,7 @@ export default function LandingPage() {
         {/* Illustration + Slogan */}
         <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center justify-between pt-10 md:pt-10">
           <div className="md:w-1/2 text-left mb-10 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
               Le futur des <br /> transports en ville
             </h1>
           </div>

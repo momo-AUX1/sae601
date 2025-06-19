@@ -36,27 +36,29 @@ export default function LandingPage() {
         {/* Background Decorative Elements */}
 
         {/* Illustration + Slogan */}
-        <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center justify-between pt-10 md:pt-10">
-          <div className="md:w-1/2 text-left mb-10 md:mb-0">
+        <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between pt-10 md:pt-10">
+          {/* Texte en premier sur mobile */}
+          <div className="md:w-1/2 text-left mb-10 md:mb-0 order-1 md:order-none">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
               Le futur des <br /> transports en ville
             </h1>
           </div>
 
-          <div className="md:w-1/2 relative">
-            {/* Illustration SVG ou PNG ou video transparente */}
+          {/* Vidéo */}
+          <div className="md:w-1/2 relative order-2 md:order-none">
             <video
                 autoPlay
                 muted
                 loop
                 playsInline
-                className="w-full h-auto max-h-[1000px] "
+                className="w-full h-auto max-h-[1000px]"
             >
               <source src="/bg-video.webm" type="video/webm" />
               Your browser does not support the video tag.
             </video>
           </div>
         </main>
+
 
         {/* Decorative Lines (optional SVG background) */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -140,12 +142,12 @@ export default function LandingPage() {
 
         </div>
       </section>
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
           {[
             { top: "-50px", left: "0px", height: 300 },
             { top: "80px", left: "-100px", height: 600 },
             { top: "-100px", left: "300px", height: 250 },
-            { top: "100px", left: "80px", height: 300 },
+            { top: "80px", left: "30px", height: 260 },
             { top: "-70px", left: "500px", height: 350 },
 
           ].map((bar, i) => (

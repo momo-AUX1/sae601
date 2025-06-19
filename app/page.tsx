@@ -141,8 +141,35 @@ export default function LandingPage() {
 
         </div>
       </section>
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+          {[
+            { top: "-50px", left: "0px", height: 300 },
+            { top: "80px", left: "-100px", height: 600 },
+            { top: "-100px", left: "300px", height: 250 },
+            { top: "100px", left: "80px", height: 300 },
+            { top: "-70px", left: "500px", height: 350 },
 
-      <Footer />
+          ].map((bar, i) => (
+              <div
+                  key={i}
+                  className="absolute w-3 bg-green-600 rounded-full opacity-90"
+                  style={{
+                    top: bar.top,
+                    left: bar.left,
+                    height: `${bar.height}px`,
+                    transform: 'rotate(-45deg)',
+                    backgroundColor: '#31540F',
+                  }}
+              />
+          ))}
+        </div>
+
+
+
+
+
+
+        <Footer />
     </div>
   )
 }

@@ -38,6 +38,7 @@ export default function Navbar() {
         { name: "Accueil", href: "/", isButton: false },
         { name: "À propos", href: "#", isButton: false },
         { name: "Compte", href: "/main", isButton: false },
+        { name: "Incidents", href: "/incidents", isButton: false },
         { name: "Déconnexion", href: "#", isButton: true, onClick: handleLogout },
       ]
     : [

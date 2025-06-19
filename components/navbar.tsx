@@ -49,20 +49,22 @@ export default function Navbar() {
       ]
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-green-100 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo*/}
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Image 
-              src="/logo.svg" 
-              alt="OutrePie Logo" 
-              width={128} 
-              height={128}
-              className="text-green-600"
-            />
-            <span className="text-xl font-bold text-green-700"> </span>
-          </Link>
+
+    <nav className="flex justify-between items-center px-8 py-6 z-20 relative">
+      {/* Logo*/}
+      <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <Image
+            src="/logo.svg"
+            alt="OutrePie Logo"
+            width={150}
+            height={150}
+        />
+        <span className="text-xl font-bold text-[#1D2A62]"> </span>
+      </Link>
+      <div className="hidden md:flex items-center space-x-8">
+
+        <div className="flex  items-center h-16">
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -71,7 +73,7 @@ export default function Navbar() {
                 <button
                   key={link.name}
                   onClick={scrollToPropos}
-                  className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full bg-transparent border-none outline-none"
+                  className="text-gray-700 hover:text-[#1D2A62] font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[#1D2A62] after:transition-all after:duration-200 hover:after:w-full bg-transparent border-none outline-none"
                   type="button"
                 >
                   {link.name}
@@ -80,7 +82,7 @@ export default function Navbar() {
                 <button
                   key={link.name}
                   onClick={handleLogout}
-                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="px-4 py-2 bg-[#1D2A62] hover:bg-[#5690F9] text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
                   type="button"
                 >
                   {link.name}
@@ -92,8 +94,8 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className={
                     link.isButton
-                      ? "px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
-                      : "text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-green-600 after:transition-all after:duration-200 hover:after:w-full"
+                      ? "px-4 py-2 bg-[#1D2A62] hover:bg-[#1D2A62] text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                      : "text-gray-700 hover:text-[#1D2A62] font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[#1D2A62] after:transition-all after:duration-200 hover:after:w-full"
                   }
                 >
                   {link.name}
@@ -106,7 +108,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors duration-200"
+              className="p-2 rounded-md text-gray-700 hover:text-[#1D2A62] hover:bg-green-50 transition-colors duration-200"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -126,7 +128,7 @@ export default function Navbar() {
                 <button
                   key={link.name}
                   onClick={scrollToPropos}
-                  className="block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-md font-medium transition-all duration-200 w-full text-left bg-transparent border-none outline-none"
+                  className="block px-4 py-2 text-gray-700 hover:text-[#1D2A62] hover:bg-green-50 rounded-md font-medium transition-all duration-200 w-full text-left bg-transparent border-none outline-none"
                   type="button"
                 >
                   {link.name}
@@ -135,7 +137,7 @@ export default function Navbar() {
                 <button
                   key={link.name}
                   onClick={handleLogout}
-                  className="block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
+                  className="block w-full text-center px-4 py-3 bg-[#1D2A62] hover:bg-[#5690F9] text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
                   type="button"
                 >
                   {link.name}
@@ -147,8 +149,8 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className={
                     link.isButton
-                      ? "block w-full text-center px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
-                      : "block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-md font-medium transition-all duration-200"
+                      ? "block w-full text-center px-4 py-3 bg-[#1D2A62] hover:bg-[#1D2A62] text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
+                      : "block px-4 py-2 text-gray-700 hover:text-[#1D2A62] hover:bg-green-50 rounded-md font-medium transition-all duration-200"
                   }
                 >
                   {link.name}

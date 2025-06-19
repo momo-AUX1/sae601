@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle, BellOff } from "lucide-react";
 import CreateIncidentModal from "../components/create-incident-modal"
+import EditProfileModal from "@/components/edit-profile-modal";
 
 interface UserInfo {
     id: number;
@@ -32,6 +33,7 @@ const UserAccountPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [loadingSignalements, setLoadingSignalements] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false);
     const [newsletterStatus, setNewsletterStatus] = useState(false);
 
     const toggleNewsletter = async () => {
@@ -301,7 +303,7 @@ const UserAccountPage: React.FC = () => {
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
                             <h4 className="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h4>
                             <div className="space-y-3">
-                                <button className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors">
+                                <button className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors" onClick={() => setShowEditModal(true)}>
                                     <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                                         <Settings size={18} className="text-green-600" />
                                     </div>
@@ -371,6 +373,12 @@ const UserAccountPage: React.FC = () => {
                 </div>
             </main>
             <CreateIncidentModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} />
+            <EditProfileModal
+                isOpen={showEditModal}
+                onClose={() => setShowEditModal(false)}
+                user={user}
+                onSave={(updatedUser) => setUser(updatedUser)}
+            />
         </div>
     );
 };

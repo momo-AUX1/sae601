@@ -65,7 +65,7 @@ export default function Timeline() {
     return (
         <section className="w-full my-20 px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#1D2A62]">
-                Votre ville évolue
+                Vers une ville meilleur
             </h2>
 
             <div className="relative w-full h-[400px] md:h-[500px] my-20">

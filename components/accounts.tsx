@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { Mail, User, MapPin, LogOut, Settings, Shield, Bell, AlertTriangle, Clock, CheckCircle, XCircle, AlertCircle, BellOff } from "lucide-react";
 import CreateIncidentModal from "../components/create-incident-modal"
 
 interface UserInfo {
@@ -10,16 +10,17 @@ interface UserInfo {
     email: string;
     nom: string;
     adresse: string;
+    news_letter: boolean;
 }
 
 interface Signalement {
     id: number;
     titre: string;
     description: string;
-    statut: string; // Now required
+    statut: string;
     date_creation: string;
     date_modification?: string;
-    categorie: string; // Add category field
+    categorie: string;
 }
 
 const API_BASE_URL = "https://test.nanodata.cloud";
@@ -31,6 +32,36 @@ const UserAccountPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [loadingSignalements, setLoadingSignalements] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false)
+    const [newsletterStatus, setNewsletterStatus] = useState(false);
+
+    const toggleNewsletter = async () => {
+        const token = localStorage.getItem('access_token');
+        if (!token) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    news_letter: !newsletterStatus
+                })
+            });
+
+            if (response.ok) {
+                setNewsletterStatus(!newsletterStatus);
+                alert(`Newsletter ${!newsletterStatus ? 'activée' : 'désactivée'} avec succès!`);
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Échec de la mise à jour');
+            }
+        } catch (error) {
+            console.error('Error updating newsletter:', error);
+            alert('Erreur lors de la mise à jour de la newsletter');
+        }
+    };
 
     useEffect(() => {
         const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
@@ -52,6 +83,7 @@ const UserAccountPage: React.FC = () => {
                 } else if (res.ok) {
                     const data = await res.json();
                     setUser(data);
+                    setNewsletterStatus(data.news_letter);
                     loadSignalements(token);
                 } else {
                     router.push('/auth');
@@ -75,14 +107,13 @@ const UserAccountPage: React.FC = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                // Transform backend data to frontend format
                 const transformedData = data.map((s: any) => ({
                     id: s.id,
-                    titre: s.categorie, // Use category as title
+                    titre: s.categorie, 
                     description: s.message,
-                    statut: s.status ? 'resolu' : 'en_cours', // Convert boolean to string
-                    date_creation: new Date(s.date).toISOString(), // Ensure ISO format
-                    categorie: s.categorie // Add category
+                    statut: s.status ? 'resolu' : 'en_cours', 
+                    date_creation: new Date(s.date).toISOString(), 
+                    categorie: s.categorie 
                 }));
                 setSignalements(transformedData);
             }
@@ -225,7 +256,7 @@ const UserAccountPage: React.FC = () => {
                                 ) : signalements.length === 0 ? (
                                     <div className="text-center py-8">
                                         <AlertTriangle size={48} className="text-gray-300 mx-auto mb-4" />
-                                         <p className="text-gray-500 text-lg">Aucun signalement trouvé</p>
+                                        <p className="text-gray-500 text-lg">Aucun signalement trouvé</p>
                                         <p className="text-gray-400 text-sm mt-1">Vous n'avez encore signalé aucun incident</p>
                                     </div>
                                 ) : (
@@ -290,13 +321,22 @@ const UserAccountPage: React.FC = () => {
                                     </div>
                                 </button>
 
-                                <button className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors">
-                                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                        <Bell size={18} className="text-purple-600" />
+                                <button
+                                    className="w-full flex items-center space-x-3 p-3 text-left hover:bg-gray-50 rounded-xl transition-colors"
+                                    onClick={toggleNewsletter}
+                                >
+                                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        {newsletterStatus ? (
+                                            <BellOff size={18} className="text-purple-600" />
+                                        ) : (
+                                            <Bell size={18} className="text-purple-600" />
+                                        )}
                                     </div>
                                     <div>
-                                        <p className="font-medium text-gray-900">Notifications</p>
-                                        <p className="text-sm text-gray-500">Préférences</p>
+                                        <p className="font-medium text-gray-900">Newsletter</p>
+                                        <p className="text-sm text-gray-500">
+                                            {newsletterStatus ? 'Désactiver' : 'Activer'}
+                                        </p>
                                     </div>
                                 </button>
 

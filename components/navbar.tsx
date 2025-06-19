@@ -55,8 +55,8 @@ export default function Navbar() {
         <Image
             src="/logo.svg"
             alt="OutrePie Logo"
-            width={200}
-            height={200}
+            width={150}
+            height={150}
         />
         <span className="text-xl font-bold text-[#1D2A62]"> </span>
       </Link>

@@ -225,7 +225,7 @@ const UserAccountPage: React.FC = () => {
                                 ) : signalements.length === 0 ? (
                                     <div className="text-center py-8">
                                         <AlertTriangle size={48} className="text-gray-300 mx-auto mb-4" />
-                                        <p className="text-gray-500 text-lg">Aucun signalement trouvé</p>
+                                         <p className="text-gray-500 text-lg">Aucun signalement trouvé</p>
                                         <p className="text-gray-400 text-sm mt-1">Vous n'avez encore signalé aucun incident</p>
                                     </div>
                                 ) : (

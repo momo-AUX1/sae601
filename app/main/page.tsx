@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Plus } from "lucide-react"
-import AppNavbar from "../../components/app-navbar"
+import AppNavbar from "../../components/navbar"
 import Account from "../../components/accounts"
 import Incidents from "../../components/incidents"
 import Settings from "../../components/settings"
@@ -53,7 +53,7 @@ export default function MainDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      <AppNavbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <AppNavbar/>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">{renderActiveTab()}</main>
 
